@@ -8,9 +8,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.core.config import settings
-from app.database import init_db, SessionLocal
-from app.routers import verifications, dashboard, issuers, tests
+from app.utils.config import settings
+from app.utils.database import init_db, SessionLocal
+from app.routes import verifications, dashboard, issuers, tests
+from app.models import database_models as models
 
 
 @asynccontextmanager
@@ -24,7 +25,6 @@ async def lifespan(app: FastAPI):
 
 def _seed_issuers():
     """Seed default issuer sources if they don't exist."""
-    from app import models
     db = SessionLocal()
     try:
         issuers_data = [
@@ -72,15 +72,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Normalize path prefix for serverless proxies
-@app.middleware("http")
-async def normalize_api_prefix(request, call_next):
-    path = request.scope.get("path", "")
-    if path and not path.startswith("/api") and path not in ("/", "/health", "/docs", "/redoc", "/openapi.json"):
-        request.scope["path"] = "/api" + path
-    response = await call_next(request)
-    return response
 
 # Routers
 app.include_router(verifications.router)

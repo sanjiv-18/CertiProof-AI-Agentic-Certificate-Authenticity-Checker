@@ -1,23 +1,8 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-from app.core.config import settings
+"""
+Database connection and session utilities (Re-export shim)
+Canonical location: app.utils.database
+"""
 
-engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False},
-)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+from app.utils.database import engine, SessionLocal, Base, get_db, init_db
 
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def init_db():
-    from app import models  # noqa: F401
-    Base.metadata.create_all(bind=engine)
+__all__ = ["engine", "SessionLocal", "Base", "get_db", "init_db"]

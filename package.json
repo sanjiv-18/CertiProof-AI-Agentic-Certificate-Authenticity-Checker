@@ -2,7 +2,20 @@
   "name": "certiproof-ai",
   "version": "1.0.0",
   "private": true,
+  "description": "CertiProof AI — Agentic Certificate Authenticity Checker for Ziro.Digital Hackathon 2026",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
-  }
+    "build": "cd frontend && npm install && npm run build",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "agentic-ai",
+    "certificate-verification",
+    "authenticity-checker",
+    "fastapi",
+    "react",
+    "hackathon-2026"
+  ],
+  "author": "Infinity Castle",
+  "license": "MIT"
 }

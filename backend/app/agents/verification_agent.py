@@ -18,9 +18,9 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from app import models
-from app.adapters.issuer_adapters import get_adapter, ExtractionResult
-from app.core.decision_engine import classify
+from app.models import database_models as models
+from app.services.issuer_adapters import get_adapter, ExtractionResult
+from app.services.decision_engine import classify
 
 
 STEP_VALIDATE = "VALIDATE_CONSENT"
